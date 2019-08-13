@@ -1,0 +1,40 @@
+<html>
+
+<head th:replace="fragments/head">
+</head>
+
+<body>
+    <div th:replace="fragments/header"></div>
+    <div class="container">
+        <div class="menu row m-5">
+            <div class="card col-8 mx-auto my-2">
+                <img th:src="@{/image/brand.png}" style="width: 25vw" class="card-img-top mx-auto">
+                <h5 class="card-title">What is BioT ?</h5>
+                <p class="card-text">BioT is a IoT Cloud System that allows you to track and control your iot devices in
+                    a real-time cross-platform system.</p>
+            </div>
+            <div class="card col-6 col-md-3 mx-auto my-2">
+                <div class="card-body">
+                    <h5 class="card-title">Menu Item 1</h5>
+                    <h6 class="card-subtitle">Menu Subtitle</h6>
+                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi odit nisi
+                        corporis quae at voluptatibus soluta neque expedita inventore illo? Quos doloribus, temporibus
+                        optio facilis commodi tempore? Velit, quia quis.</p>
+                </div>
+            </div>
+            <div class="card col-6 col-md-3 mx-auto my-2">
+                <div class="card-body">
+                    <h5 class="card-title">Menu Item 2</h5>
+                    <h6 class="card-subtitle">Menu Subtitle</h6>
+                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi odit nisi
+                        corporis quae at voluptatibus soluta neque expedita inventore illo? Quos doloribus, temporibus
+                        optio facilis commodi tempore? Velit, quia quis.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<footer th:replace="fragments/footer"></footer>
+
+</html>

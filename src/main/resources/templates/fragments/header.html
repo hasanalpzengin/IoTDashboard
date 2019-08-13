@@ -1,0 +1,28 @@
+<!-- Style -->
+<style>
+    #profile:hover{
+        transition: 0.7s;
+        transform-style: preserve-3d;
+        transform: rotateY(180deg);
+    }
+</style>
+
+<div th:fragment="header">
+    <div class="container-fluid bg-secondary">
+        <div class="row">
+            <div class="d-flex"><a href="/" class="text-light align-self-center mx-4"><h3 class="h3">IoT Dashboard</h3></a></div>
+            <div class="ml-auto mr-2 my-2 rounded-circle border border-secondary" id="profile" v-on:mouseover="isShown=true" v-on:mouseout="isShown=false">
+                <img th:src="@{/image/man.svg}" width="75px" v-show="!isShown">
+                <div class="bg-primary" style="width: 75px; height:75px; transform: rotateY(180deg);" v-show="isShown">Profile</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: "#profile",
+        data:{
+            isShown: false
+        }
+    })
+</script>

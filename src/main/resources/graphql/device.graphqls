@@ -1,0 +1,59 @@
+schema{
+    query: Query
+}
+
+type Query{
+    allDevices: [Device]
+    device(serial: ID): Device
+}
+
+type Mutation{
+    addDevice(device: DeviceInput): Device
+    removeDevice(device: DeviceInput): Boolean
+    updateDevice(device: DeviceInput): Device
+}
+
+input DeviceInput{
+    serial: ID
+    type: DeviceType
+    groups: [GroupInput]
+    isOnline: Boolean
+    description: String
+    logs: [LogInput]
+}
+
+input LogInput{
+    value: String
+    dateTime: String
+}
+
+type Log{
+    value: String
+    dateTime: String 
+}
+
+enum DeviceType{
+    Temperature
+    Proximity
+    Accelerometer
+    IR
+    Pressure
+    Light
+    Ultrasonic
+    SmokeOrGas
+    Touch
+    Color
+    Humidity
+    Tilt
+    FlowandLevel
+    GPS
+}
+
+type Device{
+    serial: ID
+    type: DeviceType
+    groups: [Group]
+    isOnline: Boolean
+    description: String
+    logs: [Log]
+}

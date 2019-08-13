@@ -1,0 +1,58 @@
+schema{
+    query: Query
+}
+
+type Query{
+    allUsers: [User]
+    user(id: String): User
+    login(username: String, password: String): User
+}
+
+type Mutation{
+    addUser(user: UserInput): User
+    removeUser(user: UserInput): Boolean
+    updateUser(user: UserInput): User
+}
+
+input GroupInput{
+    id: String
+    name: String
+}
+
+type Group{
+    id: String
+    name: String
+}
+
+enum Gender{
+    MALE
+    FEMALE
+}
+
+input UserInput{
+    id: ID
+    name: String
+    surname: String
+    username: String
+    password: String
+    email: String
+    gender: Gender
+    permissions: [String]
+    group: GroupInput
+    logs: [LogInput]
+    devices: [DeviceInput]
+}
+
+type User{
+    id: ID!
+    name: String
+    surname: String
+    username: String
+    password: String
+    email: String
+    gender: Gender
+    permissions: [String]
+    group: Group
+    logs: [Log]
+    devices: [Device]
+}
