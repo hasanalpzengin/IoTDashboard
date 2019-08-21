@@ -1,0 +1,27 @@
+<html>
+
+<head th:replace="fragments/head">
+</head>
+
+<socket>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script>
+        //init user id
+        var uid = [[${uid}]];
+    </script>
+    <script th:src="@{/js/ws.js}"></script>
+</socket>
+
+<body>
+    <div th:replace="fragments/header"></div>
+    <div class="container">
+        <div class="menu row m-5">
+
+        </div>
+    </div>
+</body>
+
+<footer th:replace="fragments/footer"></footer>
+
+</html>

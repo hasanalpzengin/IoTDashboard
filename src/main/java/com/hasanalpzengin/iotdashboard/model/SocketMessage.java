@@ -1,40 +1,26 @@
 package com.hasanalpzengin.iotdashboard.model;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHeaders;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public class SocketMessage {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class SocketMessage{
 
     public enum M_type{
-        value,
-        command,
-        user
+        VALUE,
+        COMMAND,
+        USER
     };
 
-    private String d_serial;
+    private long id;
     private M_type type;
     private String message;
-
-    public String getD_serial() {
-        return d_serial;
-    }
-
-    public void setD_serial(String d_serial) {
-        this.d_serial = d_serial;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public M_type getType() {
-        return type;
-    }
-
-    public void setType(M_type type) {
-        this.type = type;
-    }
     
 }
