@@ -65,20 +65,16 @@ public class RedisConfiguration extends CachingConfigurerSupport{
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
         JedisConnectionFactory jedisFactory = null;
-        try{
-            RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-            configuration.setHostName("localhost");
-            configuration.setPort(6379);
-            jedisFactory = new JedisConnectionFactory(configuration);
-        }catch(JedisConnectionException e){
-            logger.error("Redis Connection Error: "+e.getMessage());
-        }
+        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+        configuration.setHostName("localhost");
+        configuration.setPort(6379);
+        jedisFactory = new JedisConnectionFactory(configuration);
         return jedisFactory;
     }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        LoggingRedisTemplate<String, Object> template = new LoggingRedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory());
         return template;
     }
