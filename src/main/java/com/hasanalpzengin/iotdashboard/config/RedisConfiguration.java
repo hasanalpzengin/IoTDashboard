@@ -7,6 +7,9 @@ package com.hasanalpzengin.iotdashboard.config;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
+
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.interceptor.KeyGenerator;
@@ -14,11 +17,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
+
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 /**
  *
@@ -27,6 +33,9 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 @Configuration
 @EnableRedisRepositories
 public class RedisConfiguration extends CachingConfigurerSupport{
+
+    Logger logger = LoggerFactory.getLogger(RedisConfiguration.class);
+
     @Autowired
     CacheProperties cacheProperties;
     
@@ -55,7 +64,16 @@ public class RedisConfiguration extends CachingConfigurerSupport{
     
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
-        return new JedisConnectionFactory();
+        JedisConnectionFactory jedisFactory = null;
+        try{
+            RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+            configuration.setHostName("localhost");
+            configuration.setPort(6379);
+            jedisFactory = new JedisConnectionFactory(configuration);
+        }catch(JedisConnectionException e){
+            logger.error("Redis Connection Error: "+e.getMessage());
+        }
+        return jedisFactory;
     }
 
     @Bean
