@@ -11,19 +11,23 @@ import java.time.Duration;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
+import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
 /**
@@ -78,6 +82,11 @@ public class RedisConfiguration extends CachingConfigurerSupport{
         template.setConnectionFactory(jedisConnectionFactory());
         return template;
     }
+
+    @Override
+    public CacheErrorHandler errorHandler() {
+        return new RedisCacheErrorHandler();
+    }
     
     @Bean
     public RedisCacheManager redisCacheManager(JedisConnectionFactory jcf){
@@ -92,5 +101,27 @@ public class RedisConfiguration extends CachingConfigurerSupport{
         
     }
     
-    
+    public class RedisCacheErrorHandler implements CacheErrorHandler {
+
+        @Override
+        public void handleCacheGetError(RuntimeException exception, Cache cache, Object key) {
+            logger.info("Unable to get from cache " + cache.getName() + " : " + exception.getMessage());
+        }
+
+        @Override
+        public void handleCachePutError(RuntimeException exception, Cache cache, Object key, Object value) {
+            logger.info("Unable to put into cache " + cache.getName() + " : " + exception.getMessage());
+        }
+
+        @Override
+        public void handleCacheEvictError(RuntimeException exception, Cache cache, Object key) {
+            logger.info("Unable to evict from cache " + cache.getName() + " : " + exception.getMessage());
+        }
+
+        @Override
+        public void handleCacheClearError(RuntimeException exception, Cache cache) {
+            logger.info("Unable to clean cache " + cache.getName() + " : " + exception.getMessage());
+        }
+    }
+
 }
