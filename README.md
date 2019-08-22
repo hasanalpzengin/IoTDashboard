@@ -20,31 +20,31 @@ Java Spring Boot used in this project. This technologies used to build project.
 ## 2. Structure
 Project Structure
 ![System Structure Image](https://hasanalpzengin.com/image/cover_images/1-6a158dd7f1a5a41791b4dc5de9c82189.jpg)
-\
-\
-Server Class Structure
-*Config
+
+
+Server Class Structure\
+*Config\
 - Cache Properties
 - Redis Configuration
 - WebSocketConfiguration
-*Controller
+*Controller\
 - IndexController
 - DeviceController
 - UserController
 - SocketController
-*Model
+*Model\
 - Device
 - Group
 - Log
 - SocketMessage
 - User
-*Repositories
+*Repositories\
 - DeviceRepository
 - UserRepository
-*Resolver
+*Resolver\
 - Mutation
 - Query
-*Service
+*Service\
 - DeviceService
 - UserService
 - ViewHelper
